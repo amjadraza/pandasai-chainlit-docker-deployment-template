@@ -1,18 +1,18 @@
-# Welcome to Langchain Chainlit: App! 🚀🤖
+# Welcome to PandasAI Chainlit: App! 🚀🤖
 
-Hi there, Developer! 👋 We're excited to have you on board. This template project is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs with Docker Deployment.
+Hi there, Developers! 👋 We're excited to have you on board. This template project is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs with Docker Deployment.
 
 ## Useful Links 🔗
 
 - **Chain Link Documentation:** Get started with our comprehensive [Chainlit Documentation](https://docs.chainlit.io) 📚
-- **LangChain Documentation:** Get started with LangChain Documentation [Langchain Documentation](https://python.langchain.com/en/latest/index.html) 📚
+- **PandasAI Documentation:** Get started with PandasAI Documentation [PandasAI Documentation](https://pandas-ai.readthedocs.io/en/latest/) 📚
 
 ## FAQ
 ### How to use App Template?
-This is a basic template to set up Langchain Demo App with Docker
+This is a basic template to set up PandasAI Demo App with Docker and Chainlit
 
 ### What Libraries are being use?
-Basic Setup is using langchain, Chainlit and openai.
+Basic Setup is using Pandasai, Chainlit and openai.
 
 ### How to test the APP?
 Provide the OpenAI API keys and run the App

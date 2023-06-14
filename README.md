@@ -1,5 +1,5 @@
 <h1 align="center">
-📖 LangChain-Chainlit-Docker-Deployment App Template
+📖 PandasAI-Chainlit-Docker-Deployment App Template
 </h1>
 
 ![UI](ui.PNG?raw=true)
@@ -8,14 +8,14 @@
 ## 🔧 Features
 
 - Basic Skeleton App configured with `openai` API
-- A ChatBot using LangChain and Chainlit
+- A ChatBot using PandasAI and Chainlit
 - Docker Support with Optimisation Cache etc
 - Deployment on Google Cloud App Engine
 - Deployment on Google Cloud using `Cloud Run`
 
-> Reference repository: https://github.com/amjadraza/langchain-streamlit-docker-template
+> Reference repository: https://github.com/amjadraza/langchain-chainlit-docker-template
 
-This repo contains an `main.py` file which has a template for a chatbot implementation.
+This repo contains an `main.py` file which has a template for a chatbot talking to CSV implementation.
 
 ## Adding your chain
 To add your chain, you need to change the `load_chain` function in `main.py`.
@@ -27,7 +27,7 @@ Depending on the type of your chain, you may also need to change the inputs/outp
 1. Clone the repository📂
 
 ```bash
-git clone https://github.com/amjadraza/langchain-chainlit-docker-deployment-template
+git clone https://github.com/amjadraza/pandasai-chainlit-docker-deployment-template
 ```
 
 2. Install dependencies with [Poetry](https://python-poetry.org/) and activate virtual environment🔨
@@ -51,15 +51,15 @@ https://medium.com/@albertazzir/blazing-fast-python-docker-builds-with-poetry-a7
 
 Build the docker container
 
-``docker  build . -t langchain-chainlit-chat-app:latest``
+``docker  build . -t pandasai-chainlit-chat-app:latest``
 
 To generate Image with `DOCKER_BUILDKIT`, follow below command
 
-```DOCKER_BUILDKIT=1 docker build --target=runtime . -t langchain-chainlit-chat-app:latest```
+```DOCKER_BUILDKIT=1 docker build --target=runtime . -t pandasai-chainlit-chat-app:latest```
 
 1. Run the docker container directly 
 
-``docker run -d --name langchain-chainlit-chat-app -p 8000:8000 langchain-chainlit-chat-app ``
+``docker run -d --name pandasai-chainlit-chat-app -p 8000:8000 pandasai-chainlit-chat-app ``
 
 2. Run the docker container using docker-compose (Recommended)
 
@@ -92,7 +92,7 @@ I have adopted `Dockerfile` to deploy the app on GCP APP Engine.
 
 3. Access the App using 
 
-https://langchain-chat-app-ex6cbrefpq-ts.a.run.app/
+https://pandasai-chat-app-dpy4wfgkcq-ts.a.run.app/
 
 
 Deploy App on Google Cloud using Cloud Run (RECOMMENDED)
@@ -115,6 +115,15 @@ we are going to use `Dockerfile` to deploy the app using Google Cloud Run.
 
 `gcloud app create --project=[YOUR_PROJECT_ID]`
 
+or set the project
+
+`gcloud config set pandasai-app`
+
+Set the Region if not done before
+
+`gcloud config set compute/region australia-southeast1`
+
+
 2. Enable Services for the Project
 
 ```
@@ -125,35 +134,35 @@ gcloud services enable run.googleapis.com
 3. Create Service Account
 
 ```
-gcloud iam service-accounts create langchain-app-cr \
-    --display-name="langchain-app-cr"
+gcloud iam service-accounts create pandasai-app-cr \
+    --display-name="pandasai-app-cr"
 
-gcloud projects add-iam-policy-binding langchain-chat \
-    --member="serviceAccount:langchain-app-cr@langchain-chat.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding pandasai-app \
+    --member="serviceAccount:pandasai-app-cr@pandasai-app.iam.gserviceaccount.com" \
     --role="roles/run.invoker"
 
-gcloud projects add-iam-policy-binding langchain-chat \
-    --member="serviceAccount:langchain-app-cr@langchain-chat.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding pandasai-app \
+    --member="serviceAccount:pandasai-app-cr@pandasai-app.iam.gserviceaccount.com" \
     --role="roles/serviceusage.serviceUsageConsumer"
 
-gcloud projects add-iam-policy-binding langchain-chat \
-    --member="serviceAccount:langchain-app-cr@langchain-chat.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding pandasai-app \
+    --member="serviceAccount:pandasai-app-cr@pandasai-app.iam.gserviceaccount.com" \
     --role="roles/run.admin"
 ``` 
 
 4. Generate the Docker
 
-`DOCKER_BUILDKIT=1 docker build --target=runtime . -t australia-southeast1-docker.pkg.dev/langchain-chat/clapp/langchain-chainlit-chat-app:latest`
+`DOCKER_BUILDKIT=1 docker build --target=runtime . -t australia-southeast1-docker.pkg.dev/pandasai-app/pai-app/pandasai-chainlit-chat-app:latest`
 
 5. Push Image to Google Artifact's Registry
 
-Create the repository with name `clapp`
+Create the repository with name `pai-app`
 
 ```
-gcloud artifacts repositories create clapp \
+gcloud artifacts repositories create pai-app \
     --repository-format=docker \
     --location=australia-southeast1 \
-    --description="A Langachain Chainlit App" \
+    --description="A PandasAI Chainlit App" \
     --async
 ```
 
@@ -171,16 +180,16 @@ Check the artifacts locations
 
 Once ready, let us push the image to location
 
-`docker push australia-southeast1-docker.pkg.dev/langchain-chat/clapp/langchain-chainlit-chat-app:latest`
+`docker push australia-southeast1-docker.pkg.dev/pandasai-app/pai-app/pandasai-chainlit-chat-app:latest`
 
 6. Deploy using Cloud Run
 
 Once image is pushed to Google Cloud Artifacts Registry. Let us deploy the image.
 
 ```
-gcloud run deploy langchain-chat-app --image=australia-southeast1-docker.pkg.dev/langchain-chat/clapp/langchain-chainlit-chat-app:latest \
+gcloud run deploy pandasai-chat-app --image=australia-southeast1-docker.pkg.dev/pandasai-app/pai-app/pandasai-chainlit-chat-app:latest \
     --region=australia-southeast1 \
-    --service-account=langchain-app-cr@langchain-chat.iam.gserviceaccount.com \
+    --service-account=pandasai-app-cr@pandasai-app.iam.gserviceaccount.com \
     --port=8000
 ```
 
@@ -188,12 +197,12 @@ gcloud run deploy langchain-chat-app --image=australia-southeast1-docker.pkg.dev
 
 You can try the app using below link 
 
-https://langchain-chat-app-ex6cbrefpq-ts.a.run.app/
+https://pandasai-chat-app-dpy4wfgkcq-ts.a.run.app/
 
 
 ## Report Feedbacks
 
-As `langchain-chainlit-docker-deployment-template` is a template project with minimal example. Report issues if you face any. 
+As `pandasai-chainlit-docker-deployment-template` is a template project with minimal example. Report issues if you face any. 
 
 ## DISCLAIMER
 
